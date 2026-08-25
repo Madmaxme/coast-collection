@@ -4,7 +4,7 @@ export const site = SiteSchema.parse({
   name: "Coast Collection",
   wordmark: "Coast Collection",
   announcement: "Free shipping",
-  marqueeItems: ["handmade", "one of a kind", "knotted with care"],
+  marqueeItems: ["HANDMADE WITH LOVE", "COAST TO COAST"],
   social: [
     { label: "Instagram", href: "https://www.instagram.com/coastcollection.co" },
     { label: "TikTok", href: "https://www.tiktok.com/@julesgruber12" },
