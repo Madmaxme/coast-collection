@@ -1,0 +1,4 @@
+# CLI `vercel` uploads the working tree; Git does not. Keep local dumps off deploys.
+*.mov
+/raw/
+.env*
