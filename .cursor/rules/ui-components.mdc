@@ -1,0 +1,20 @@
+---
+description: UI reads typed content; no merch copy in components
+globs: src/{components,app}/**/*.tsx
+alwaysApply: false
+---
+
+# UI
+
+- Props types come from `@/content` (`Site`, `Product`, `CollageImage`).
+- Product rails and collage map over SSOT arrays. Do not slice a hardcoded four filenames.
+- Internal routes: `next/link`. External social: `<a target="_blank" rel="noopener noreferrer">`.
+- Collage grid stays `gap-0`. Hero uses `site.heroImageSrc`, not a bag photo.
+
+```tsx
+// BAD
+<img src="/bags/leopard.jpeg" alt="Leopard" />
+
+// GOOD
+<Image src={product.imageSrc} alt={product.name} />
+```

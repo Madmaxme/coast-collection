@@ -1,0 +1,19 @@
+import { SiteSchema } from "./schema";
+
+export const site = SiteSchema.parse({
+  name: "Coast Collection",
+  wordmark: "Coast Collection",
+  announcement: "Free shipping",
+  marqueeItems: ["handmade", "one of a kind", "knotted with care"],
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/coastcollection.co" },
+    { label: "TikTok", href: "https://www.tiktok.com/@julesgruber12" },
+  ],
+  footerBlurb:
+    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe — one print, one piece.",
+  navLabel: "Shop",
+  heroOverlay: "coast collection",
+  heroImageSrc: "/hero/homepage.jpg",
+  heroImageAlt:
+    "Coast Collection look: white tank with a palm-tree patch, shell belt, and cream trousers in front of a boutique window",
+});
