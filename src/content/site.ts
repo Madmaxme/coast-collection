@@ -10,8 +10,12 @@ export const site = SiteSchema.parse({
     { label: "TikTok", href: "https://www.tiktok.com/@julesgruber12" },
   ],
   footerBlurb:
-    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe — one print, one piece.",
+    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe and beaded appliqué tanks — one motif, one piece.",
   navLabel: "Shop",
+  productCategories: [
+    { id: "knot-bag", heading: "Knot bags" },
+    { id: "applique-tank", heading: "Appliqué tanks" },
+  ],
   heroOverlay: "coast collection",
   heroImageSrc: "/hero/homepage.jpg",
   heroImageAlt:

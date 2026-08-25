@@ -23,7 +23,11 @@ export default function Home() {
           overlay={site.heroOverlay}
         />
         <Marquee items={site.marqueeItems} />
-        <ProductRail products={products} />
+        <ProductRail
+          heading={site.navLabel}
+          categories={site.productCategories}
+          products={products}
+        />
         <Collage images={collageImages} />
       </main>
       <Footer blurb={site.footerBlurb} wordmark={site.wordmark} />

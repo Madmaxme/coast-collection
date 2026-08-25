@@ -7,6 +7,6 @@ alwaysApply: true
 
 - Brand copy, nav, social URLs, hero, collage, and products live only in `src/content/`. Parse with Zod at import. Types come from `z.infer` — do not add a parallel interface.
 - Components and pages import `@/content`. Never hardcode bag names, image paths, Instagram/TikTok URLs, or announcement text in JSX.
-- Do not commit `*.mov`, `/raw/`, or Cursor `assets/` dumps. Runtime images: `public/bags/`, `public/collage/`, `public/hero/`.
+- Do not commit `*.mov`, `/raw/`, or Cursor `assets/` dumps. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
 - Keep Account / Search / Cart as stubs until checkout exists. No fake Stripe.
 - Prefer Server Components. Do not add `"use client"` unless the file needs browser APIs or event handlers.

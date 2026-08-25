@@ -10,7 +10,11 @@ export default function ShopPage() {
           {site.wordmark}
         </Link>
       </header>
-      <ProductRail products={products} />
+      <ProductRail
+        heading={site.navLabel}
+        categories={site.productCategories}
+        products={products}
+      />
     </div>
   );
 }

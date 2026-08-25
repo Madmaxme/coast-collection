@@ -17,7 +17,7 @@ pnpm lint
 pnpm build
 ```
 
-Catalog and site copy: `src/content/`. Product images: `public/bags/`.
+Catalog and site copy: `src/content/`. Product images: `public/bags/`, `public/apparel/`.
 
 ## Hosting (Vercel Hobby)
 

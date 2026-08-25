@@ -8,7 +8,7 @@ alwaysApply: false
 
 - Change copy or SKUs in `site.ts`, `catalog.ts`, or `collage.ts`. Update `schema.ts` first if the shape changes.
 - Export parsed values only (`SiteSchema.parse`, `ProductSchema.array().parse`, collage `.length(4)`). Invalid data must fail `pnpm build`.
-- Image fields must keep prefixes: `/bags/`, `/collage/`, `/hero/`. Social `href` values must be real URLs, not `#`.
+- Image fields must keep prefixes: `/bags/`, `/apparel/`, `/collage/`, `/hero/`. Social `href` values must be real URLs, not `#`.
 - Do not duplicate product lists in JSON, markdown, or a second TypeScript type file.
 
 ```ts

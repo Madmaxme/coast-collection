@@ -14,5 +14,5 @@ Same policy as `.cursor/rules/` (Cursor loads those automatically). Other agents
 
 - Site copy, nav, social URLs, hero, collage, and products live only in `src/content/`. Parse with Zod. Types from `z.infer` in `src/content/schema.ts`.
 - Do not duplicate product names or image paths in components. Import `@/content`.
-- Do not commit `*.mov` or `/raw/`. Runtime images: `public/bags/`, `public/collage/`, `public/hero/`.
+- Do not commit `*.mov` or `/raw/`. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
 - Account / Search / Cart stay stubs until real checkout. Prefer Server Components.
