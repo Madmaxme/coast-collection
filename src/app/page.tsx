@@ -14,23 +14,24 @@ export default function Home() {
       <Header
         wordmark={site.wordmark}
         navLabel={site.navLabel}
+        menuLabel={site.menuLabel}
         social={site.social}
+        utilityNav={site.utilityNav}
+        infoNav={site.infoNav}
+        categories={site.productCategories}
       />
       <main>
         <Hero
           src={site.heroImageSrc}
           alt={site.heroImageAlt}
           overlay={site.heroOverlay}
+          shopLabel={site.navLabel}
         />
         <Marquee items={site.marqueeItems} />
-        <ProductRail
-          heading={site.navLabel}
-          categories={site.productCategories}
-          products={products}
-        />
+        <ProductRail products={products} />
         <Collage images={collageImages} />
       </main>
-      <Footer blurb={site.footerBlurb} wordmark={site.wordmark} />
+      <Footer name={site.name} social={site.social} infoNav={site.infoNav} />
     </div>
   );
 }

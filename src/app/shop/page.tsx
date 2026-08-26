@@ -1,20 +1,26 @@
-import Link from "next/link";
-import { ProductRail } from "@/components/ProductRail";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ProductGrid } from "@/components/ProductGrid";
 import { products, site } from "@/content";
 
 export default function ShopPage() {
   return (
     <div className="flex flex-1 flex-col">
-      <header className="border-b border-craft/15 px-6 py-6">
-        <Link href="/" className="font-script text-3xl text-ink">
-          {site.wordmark}
-        </Link>
-      </header>
-      <ProductRail
-        heading={site.navLabel}
+      <AnnouncementBar announcement={site.announcement} />
+      <Header
+        wordmark={site.wordmark}
+        navLabel={site.navLabel}
+        menuLabel={site.menuLabel}
+        social={site.social}
+        utilityNav={site.utilityNav}
+        infoNav={site.infoNav}
         categories={site.productCategories}
-        products={products}
       />
+      <main>
+        <ProductGrid products={products} />
+      </main>
+      <Footer name={site.name} social={site.social} infoNav={site.infoNav} />
     </div>
   );
 }

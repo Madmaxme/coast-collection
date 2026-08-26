@@ -119,8 +119,31 @@
   animation: marquee-scroll 28s linear infinite;
 }
 
+.nav-drawer {
+  transform: translateX(-100%);
+  transition: transform 380ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-drawer[data-open="true"] {
+  transform: translateX(0);
+}
+
+.nav-drawer::backdrop {
+  background-color: rgb(58 46 38 / 0);
+  transition: background-color 380ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-drawer[data-open="true"]::backdrop {
+  background-color: rgb(58 46 38 / 0.4);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee {
     animation: none;
+  }
+
+  .nav-drawer,
+  .nav-drawer::backdrop {
+    transition: none;
   }
 }

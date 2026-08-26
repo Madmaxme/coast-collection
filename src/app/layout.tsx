@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist_Mono, Great_Vibes, Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { site } from "@/content";
@@ -28,6 +28,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: site.wordmark,
   description: site.footerBlurb,
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f3ece5",
 };
 
 export default function RootLayout({

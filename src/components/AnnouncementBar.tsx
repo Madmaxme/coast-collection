@@ -6,7 +6,7 @@ type AnnouncementBarProps = {
 
 export function AnnouncementBar({ announcement }: AnnouncementBarProps) {
   return (
-    <div className="bg-craft px-4 py-2 text-center text-[13px] tracking-[0.12em] text-canvas uppercase">
+    <div className="bg-craft px-3 py-2 text-center text-[11px] tracking-[0.16em] text-canvas uppercase whitespace-nowrap md:px-4 md:text-[13px] md:tracking-[0.12em]">
       {announcement}
     </div>
   );

@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const NavItemSchema = z.object({
+  label: z.string().min(1),
+});
+
 export const SocialLinkSchema = z.object({
   label: z.string().min(1),
   href: z.string().min(1),
@@ -26,8 +30,16 @@ export const SiteSchema = z.object({
   announcement: z.string().min(1),
   marqueeItems: z.array(z.string().min(1)).min(1),
   social: z.array(SocialLinkSchema).min(1),
+  utilityNav: z.array(NavItemSchema).min(1),
+  infoNav: z.array(NavItemSchema).min(1),
+  footerHeadings: z.object({
+    shop: z.string().min(1),
+    help: z.string().min(1),
+    follow: z.string().min(1),
+  }),
   footerBlurb: z.string().min(1),
   navLabel: z.string().min(1),
+  menuLabel: z.string().min(1),
   productCategories: z.array(ProductCategorySchema).min(1),
   heroOverlay: z.string().min(1),
   heroImageSrc: z.string().startsWith("/hero/"),
@@ -53,6 +65,7 @@ export const CollageImageSchema = z.object({
 });
 
 export type SocialLink = z.infer<typeof SocialLinkSchema>;
+export type NavItem = z.infer<typeof NavItemSchema>;
 export type ProductCategory = z.infer<typeof ProductCategorySchema>;
 export type Site = z.infer<typeof SiteSchema>;
 export type Product = z.infer<typeof ProductSchema>;

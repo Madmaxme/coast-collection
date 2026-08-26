@@ -7,15 +7,15 @@ type CollageProps = {
 
 export function Collage({ images }: CollageProps) {
   return (
-    <section className="px-6 pb-16 md:pb-24">
-      <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-0">
+    <section className="w-full">
+      <div className="grid grid-cols-2 gap-0">
         {images.map((image) => (
           <div key={image.id} className="relative aspect-square overflow-hidden bg-canvas">
             <Image
               src={image.src}
               alt={image.alt}
               fill
-              sizes="(max-width: 768px) 50vw, 620px"
+              sizes="50vw"
               className="object-cover"
             />
           </div>
