@@ -40,6 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local originals and feedback video (do not commit)
+# local originals and Julia's feedback videos (do not commit)
 /raw/
 *.mov

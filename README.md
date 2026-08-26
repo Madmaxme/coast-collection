@@ -19,6 +19,8 @@ pnpm build
 
 Catalog and site copy: `src/content/`. Product images: `public/bags/`, `public/apparel/`.
 
+Julia's phone videos stay in `raw/feedback/` (gitignored). Agents use `.cursor/skills/apply-julia-feedback`. Ship with commit + push to `main`.
+
 ## Hosting (Vercel Hobby)
 
 This is a Next.js App Router app with `next/image`. Host it on [Vercel](https://vercel.com) so image optimization and preview deploys work without an adapter.

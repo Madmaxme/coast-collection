@@ -1,0 +1,18 @@
+---
+description: Julia's boutique UX taste from her video and screenshot notes
+alwaysApply: true
+---
+
+# Julia's taste
+
+Hunny House is the **browsing feel**, not a clone. Brand is Coast Collection (handmade knot bags + appliqué tanks).
+
+- **Shop** is a separate `/shop` page. Homepage header does not need a Shop link on mobile; the **hero button** goes to `/shop`.
+- **Phone:** hamburger **drawer** (slide + fade). **Cart stays in the header.** Desktop: visible Shop + category links — no hamburger.
+- **Footer:** thin (copyright, Instagram, TikTok, Shipping). Not a second Account/Cart column.
+- Nav lists are **plain rows** (links/`<button>`). Do not use the shared `Button` chrome in the drawer — it draws boxes.
+- One homepage product **rail** (all products). Shop page is a **grid** (2 / 3 / 4 cols). Collage is **full-bleed**.
+- Marquee must **loop**. Taps ≥ 44px. Account / Search / Cart stay stubs — no fake Stripe.
+- After UI work, check **phone width and desktop**. Screenshot-only is not enough.
+
+Durable notes: `docs/feedback/taste.md`. New videos: skill `apply-julia-feedback`.

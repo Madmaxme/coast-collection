@@ -16,3 +16,15 @@ Same policy as `.cursor/rules/` (Cursor loads those automatically). Other agents
 - Do not duplicate product names or image paths in components. Import `@/content`.
 - Do not commit `*.mov` or `/raw/`. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
 - Account / Search / Cart stay stubs until real checkout. Prefer Server Components.
+
+## Harness
+
+| Piece | Path | Role |
+| --- | --- | --- |
+| Always-on rules | `.cursor/rules/*.mdc` | SSOT, Julia's taste, git, UI |
+| Skills | `.cursor/skills/*/SKILL.md` | `apply-julia-feedback`, `ship-to-main` |
+| Hooks | `.cursor/hooks.json` | Session context + block git-adding videos |
+| Feedback notes | `docs/feedback/` | Committed transcripts / taste |
+| Local videos | `raw/feedback/` | Gitignored `.mov` inbox |
+
+Solo shipping: commit and push `main`. No PR unless asked. Julia videos: `bash scripts/ingest-feedback.sh` then the apply-julia-feedback skill.

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/session-start.py"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/block-media-git.py",
+        "matcher": "git "
+      }
+    ]
+  }
+}

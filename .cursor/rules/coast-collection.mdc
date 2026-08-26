@@ -10,3 +10,4 @@ alwaysApply: true
 - Do not commit `*.mov`, `/raw/`, or Cursor `assets/` dumps. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
 - Keep Account / Search / Cart as stubs until checkout exists. No fake Stripe.
 - Prefer Server Components. Do not add `"use client"` unless the file needs browser APIs or event handlers.
+- New Julia videos → `raw/feedback/` + skill `apply-julia-feedback`. Ship via skill `ship-to-main`.

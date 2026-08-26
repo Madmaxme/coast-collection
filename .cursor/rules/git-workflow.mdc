@@ -1,0 +1,12 @@
+---
+description: Solo main-branch shipping; never commit videos or raw dumps
+alwaysApply: true
+---
+
+# Git
+
+This repo is a **single developer**. When asked to ship: **commit and push `main`**. Do not open a PR unless asked.
+
+Never stage `*.mov`, `/raw/`, `.env*`, or Cursor `assets/` dumps. Runtime images only under `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
+
+Drop new phone videos in `raw/feedback/` (gitignored). Commit **transcripts and taste notes** in `docs/feedback/`, not the video files.

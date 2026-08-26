@@ -1,0 +1,13 @@
+---
+description: Verify storefront UI in the browser on mobile and desktop after visual changes
+globs: src/{app,components}/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# Verify UI
+
+After changing layout, nav, drawer, hero, shop grid, or footer:
+
+1. Exercise the flow (open Menu, close, go `/shop`, back home).
+2. Check **~390px** and **desktop**.
+3. Confirm copy still comes from `@/content`, not hardcoded strings in JSX.
