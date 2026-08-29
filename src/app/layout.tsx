@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Geist_Mono, Great_Vibes, Inter } from "next/font/google";
+import { Fraunces, Geist_Mono, Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import { site } from "@/content";
 import "./globals.css";
@@ -11,12 +11,6 @@ const inter = Inter({
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
-  subsets: ["latin"],
-});
-
-const greatVibes = Great_Vibes({
-  variable: "--font-great-vibes",
-  weight: "400",
   subsets: ["latin"],
 });
 
@@ -44,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${greatVibes.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-canvas text-ink">{children}</body>
     </html>

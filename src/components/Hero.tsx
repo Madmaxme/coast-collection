@@ -5,7 +5,7 @@ import type { Site } from "@/content";
 type HeroProps = {
   src: Site["heroImageSrc"];
   alt: Site["heroImageAlt"];
-  overlay: Site["heroOverlay"];
+  overlay: Site["wordmark"];
   shopLabel: Site["navLabel"];
 };
 
@@ -22,7 +22,7 @@ export function Hero({ src, alt, overlay, shopLabel }: HeroProps) {
       />
       <div className="absolute inset-0 bg-ink/25" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-4">
-        <p className="font-script text-5xl text-canvas drop-shadow-sm md:text-8xl lg:text-9xl">
+        <p className="font-heading text-5xl tracking-[0.12em] text-canvas uppercase drop-shadow-sm md:text-7xl lg:text-8xl">
           {overlay}
         </p>
         <Link

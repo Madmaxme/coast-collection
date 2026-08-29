@@ -18,13 +18,12 @@ export default function Home() {
         social={site.social}
         utilityNav={site.utilityNav}
         infoNav={site.infoNav}
-        categories={site.productCategories}
       />
       <main>
         <Hero
           src={site.heroImageSrc}
           alt={site.heroImageAlt}
-          overlay={site.heroOverlay}
+          overlay={site.wordmark}
           shopLabel={site.navLabel}
         />
         <Marquee items={site.marqueeItems} />

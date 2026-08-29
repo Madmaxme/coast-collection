@@ -41,7 +41,6 @@ export const SiteSchema = z.object({
   navLabel: z.string().min(1),
   menuLabel: z.string().min(1),
   productCategories: z.array(ProductCategorySchema).min(1),
-  heroOverlay: z.string().min(1),
   heroImageSrc: z.string().startsWith("/hero/"),
   heroImageAlt: z.string().min(1),
 });

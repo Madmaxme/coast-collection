@@ -13,11 +13,13 @@ type HeaderProps = {
   social: Site["social"];
   utilityNav: Site["utilityNav"];
   infoNav: Site["infoNav"];
-  categories: Site["productCategories"];
 };
 
 const drawerLinkClassName =
   "flex min-h-11 items-center border-b border-craft/10 text-[15px] text-ink";
+
+const headerUtilityClassName =
+  "min-h-11 min-w-11 px-2 text-[12px] font-medium md:text-sm";
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -30,7 +32,6 @@ export function Header({
   social,
   utilityNav,
   infoNav,
-  categories,
 }: HeaderProps) {
   const drawerRef = useRef<HTMLDialogElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -92,19 +93,10 @@ export function Header({
           <nav aria-label="Primary" className="hidden items-center md:flex">
             <Link
               href="/shop"
-              className="inline-flex min-h-11 items-center px-2 text-[13px] tracking-[0.16em] text-ink uppercase hover:text-jewel"
+              className={`inline-flex items-center ${headerUtilityClassName}`}
             >
               {navLabel}
             </Link>
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href="/shop"
-                className="inline-flex min-h-11 items-center px-2 text-[13px] tracking-[0.16em] text-ink/80 uppercase hover:text-jewel"
-              >
-                {category.heading}
-              </Link>
-            ))}
           </nav>
         </div>
         <Link
@@ -119,7 +111,7 @@ export function Header({
               key={item.label}
               variant="ghost"
               type="button"
-              className="hidden min-h-11 min-w-11 px-2 text-[12px] md:inline-flex md:text-sm"
+              className={`hidden md:inline-flex ${headerUtilityClassName}`}
             >
               {item.label}
             </Button>
@@ -128,7 +120,7 @@ export function Header({
             <Button
               variant="ghost"
               type="button"
-              className="min-h-11 min-w-11 px-2 text-[12px] md:text-sm"
+              className={headerUtilityClassName}
             >
               {cartItem.label}
             </Button>
@@ -169,16 +161,6 @@ export function Header({
           <Link href="/shop" className={drawerLinkClassName} onClick={closeDrawer}>
             {navLabel}
           </Link>
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href="/shop"
-              className={drawerLinkClassName}
-              onClick={closeDrawer}
-            >
-              {category.heading}
-            </Link>
-          ))}
           {drawerUtilities.map((item) => (
             <button key={item.label} type="button" className={`${drawerLinkClassName} w-full text-left`}>
               {item.label}

@@ -24,7 +24,6 @@ export const site = SiteSchema.parse({
     { id: "knot-bag", heading: "Knot bags" },
     { id: "applique-tank", heading: "Appliqué tanks" },
   ],
-  heroOverlay: "coast collection",
   heroImageSrc: "/hero/homepage.jpg",
   heroImageAlt:
     "Coast Collection look: white tank with a palm-tree patch, shell belt, and cream trousers in front of a boutique window",

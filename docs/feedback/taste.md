@@ -15,11 +15,12 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 3. `/shop` is a vertical catalog (grid), not a hash on the homepage.
 4. One homepage product row mixing bags and tanks.
 5. Full-bleed collage.
-6. Marquee must loop (no blank gap).
+6. Marquee must loop with **no blank gap** (repeat the line until the track fills the viewport).
 7. Mobile **drawer** for Menu; **Cart always visible**.
-8. Desktop: Shop + Knot bags + Appliqué tanks in the header.
-9. Footer is slim: © year, Instagram, TikTok, Shipping.
-10. Drawer rows must match (no Button outline boxes on stubs).
+8. Desktop header: **Shop only** — no Knot bags / Appliqué tanks links. Shop type matches Account / Search / Cart.
+9. Hero title uses the **same heading serif** as the wordmark, larger — not a script overlay.
+10. Footer is slim: © year, Instagram, TikTok, Shipping.
+11. Drawer rows must match (no Button outline boxes on stubs). One Shop in the drawer, not extra category rows to the same page.
 
 ## Still stubs
 
