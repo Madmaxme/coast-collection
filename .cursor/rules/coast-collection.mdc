@@ -8,6 +8,6 @@ alwaysApply: true
 - Brand copy, nav, social URLs, hero, collage, and products live only in `src/content/`. Parse with Zod at import. Types come from `z.infer` — do not add a parallel interface.
 - Components and pages import `@/content`. Never hardcode bag names, image paths, Instagram/TikTok URLs, or announcement text in JSX.
 - Do not commit `*.mov`, `/raw/`, or Cursor `assets/` dumps. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
-- Keep Account / Search / Cart as stubs until checkout exists. No fake Stripe.
+- Account / Search / Cart are UI shells (no auth, search hits, or Stripe). Copy still from `src/content/`.
 - Prefer Server Components. Do not add `"use client"` unless the file needs browser APIs or event handlers.
 - New Julia videos → `raw/feedback/` + skill `apply-julia-feedback`. Ship via skill `ship-to-main`.

@@ -1,15 +1,13 @@
 import { ProductSchema, type Product } from "./schema";
 
-export const products: Product[] = ProductSchema.array().min(1).parse([
+const listed = [
   {
     id: "leopard",
     slug: "leopard",
     name: "Leopard",
     category: "knot-bag",
     imageSrc: "/bags/leopard.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "blue-hydrangea",
@@ -17,9 +15,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Blue hydrangea",
     category: "knot-bag",
     imageSrc: "/bags/blue-hydrangea.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "red-bandana",
@@ -27,9 +23,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Red bandana",
     category: "knot-bag",
     imageSrc: "/bags/red-bandana.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "mustard-plaid",
@@ -37,9 +31,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Mustard plaid",
     category: "knot-bag",
     imageSrc: "/bags/mustard-plaid.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "cream-pin-dot",
@@ -47,9 +39,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Cream pin-dot",
     category: "knot-bag",
     imageSrc: "/bags/cream-pin-dot.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "gold-dot-cream",
@@ -57,9 +47,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Gold-dot cream",
     category: "knot-bag",
     imageSrc: "/bags/gold-dot-cream.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "rose-toile",
@@ -67,9 +55,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Rose toile",
     category: "knot-bag",
     imageSrc: "/bags/rose-toile.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "dusty-blue-floral",
@@ -77,9 +63,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Dusty-blue floral",
     category: "knot-bag",
     imageSrc: "/bags/dusty-blue-floral.jpeg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "pearl-oyster",
@@ -87,9 +71,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Pearl oyster",
     category: "applique-tank",
     imageSrc: "/apparel/pearl-oyster.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "pink-scallop",
@@ -97,9 +79,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Pink scallop",
     category: "applique-tank",
     imageSrc: "/apparel/pink-scallop.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "pearl-conch",
@@ -107,9 +87,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Pearl conch",
     category: "applique-tank",
     imageSrc: "/apparel/pearl-conch.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "sunflower",
@@ -117,9 +95,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Sunflower",
     category: "applique-tank",
     imageSrc: "/apparel/sunflower.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "lobster",
@@ -127,9 +103,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Lobster",
     category: "applique-tank",
     imageSrc: "/apparel/lobster.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "sea-turtle",
@@ -137,9 +111,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Sea turtle",
     category: "applique-tank",
     imageSrc: "/apparel/sea-turtle.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "hibiscus",
@@ -147,9 +119,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Hibiscus",
     category: "applique-tank",
     imageSrc: "/apparel/hibiscus.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "aqua-oyster",
@@ -157,9 +127,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Aqua oyster",
     category: "applique-tank",
     imageSrc: "/apparel/aqua-oyster.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "orange-crab",
@@ -167,9 +135,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Orange crab",
     category: "applique-tank",
     imageSrc: "/apparel/orange-crab.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "palm-tree",
@@ -177,9 +143,7 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Palm tree",
     category: "applique-tank",
     imageSrc: "/apparel/palm-tree.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
   {
     id: "red-crab",
@@ -187,8 +151,13 @@ export const products: Product[] = ProductSchema.array().min(1).parse([
     name: "Red crab",
     category: "applique-tank",
     imageSrc: "/apparel/red-crab.jpg",
-    priceLabel: "Price on request",
     sold: false,
-    tagline: "one of a kind",
   },
-]);
+] as const;
+
+export const products: Product[] = ProductSchema.array().min(1).parse(
+  listed.map((product) => ({
+    ...product,
+    priceLabel: product.category === "knot-bag" ? "$65" : "$70",
+  })),
+);

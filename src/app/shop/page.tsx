@@ -15,6 +15,7 @@ export default function ShopPage() {
         social={site.social}
         utilityNav={site.utilityNav}
         infoNav={site.infoNav}
+        sheetCopy={site.sheetCopy}
       />
       <main>
         <ProductGrid products={products} />

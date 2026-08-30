@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Product } from "@/content";
+import { ProductCard } from "@/components/ProductCard";
 
 type ProductRailProps = {
   products: Product[];
@@ -14,24 +14,7 @@ export function ProductRail({ products }: ProductRailProps) {
             key={product.id}
             className="w-[42vw] max-w-[240px] shrink-0 snap-start sm:w-[240px]"
           >
-            <div className="relative aspect-[3/4] bg-canvas">
-              <Image
-                src={product.imageSrc}
-                alt={product.name}
-                fill
-                sizes="(max-width: 640px) 42vw, 240px"
-                className="object-contain"
-              />
-            </div>
-            <p className="mt-3 font-heading text-base text-ink md:text-lg">{product.name}</p>
-            {product.priceLabel ? (
-              <p className="text-[12px] tracking-wide text-ink/70 uppercase md:text-[13px]">
-                {product.priceLabel}
-              </p>
-            ) : null}
-            {product.tagline ? (
-              <p className="mt-1 text-[12px] text-sage">{product.tagline}</p>
-            ) : null}
+            <ProductCard product={product} sizes="(max-width: 640px) 42vw, 240px" />
           </li>
         ))}
       </ul>

@@ -21,7 +21,11 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 9. Hero title uses the **same heading serif** as the wordmark, larger — not a script overlay.
 10. Footer is slim: © year, Instagram, TikTok, Shipping.
 11. Drawer rows must match (no Button outline boxes on stubs). One Shop in the drawer, not extra category rows to the same page.
+12. Product photos **blend** into canvas (no gray/white squares). Cream stills were the reference.
+13. Cards: bags **$65**, tanks **$70**. No “one of a kind” on the card.
+14. Homepage: **story** after collage, then the slim footer. Keep scrolling.
+15. Account / Search / Cart open **UI shells** (sign in, search field, cart drawer with empty + Shop). Still no Stripe.
 
 ## Still stubs
 
-Account, Search, Cart, Shipping — no Stripe until checkout exists.
+Shipping, real auth, search hits, cart line items — no Stripe until checkout exists.

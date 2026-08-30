@@ -13,7 +13,8 @@ Hunny House is the **browsing feel**, not a clone. Brand is Coast Collection (ha
 - **Footer:** thin (copyright, Instagram, TikTok, Shipping). Not a second Account/Cart column.
 - Nav lists are **plain rows** (links/`<button>`). Do not use the shared `Button` chrome in the drawer — it draws boxes.
 - One homepage product **rail** (all products). Shop page is a **grid** (2 / 3 / 4 cols). Collage is **full-bleed**.
-- Marquee must **loop**. Taps ≥ 44px. Account / Search / Cart stay stubs — no fake Stripe.
+- Marquee must **loop**. Taps ≥ 44px. Account / Search / Cart are **UI shells** (sign in, search field, empty cart drawer + Shop) — no Stripe until checkout.
+- Homepage **story** after the collage. Product stills blend into canvas. Bags **$65**, tanks **$70**; no “one of a kind” on cards.
 - After UI work, check **phone width and desktop**. Screenshot-only is not enough.
 
 Durable notes: `docs/feedback/taste.md`. New videos: skill `apply-julia-feedback`.

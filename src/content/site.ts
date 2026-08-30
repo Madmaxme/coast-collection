@@ -18,6 +18,16 @@ export const site = SiteSchema.parse({
   },
   footerBlurb:
     "Coast Collection is a handmade studio of Japanese knot bags with suede fringe and beaded appliqué tanks — one motif, one piece.",
+  sheetCopy: {
+    signIn: "Sign in",
+    createAccount: "Create an account",
+    email: "Email",
+    password: "Password",
+    searchPlaceholder: "Search",
+    cartEmpty: "Your cart is empty",
+    cartTotal: "Total",
+    emptyTotal: "$0",
+  },
   navLabel: "Shop",
   menuLabel: "Menu",
   productCategories: [
