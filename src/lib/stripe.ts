@@ -9,9 +9,9 @@ export function stripeClient() {
   return client;
 }
 
-export function integrationIdentifier() {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const bytes = crypto.getRandomValues(new Uint8Array(8));
-  const suffix = [...bytes].map((byte) => alphabet[byte % 26]).join("");
-  return `coast_checkout_${suffix}`;
+export const INTEGRATION_IDENTIFIER = "coast_checkout_mkwqplzn";
+
+export async function newestCustomerId(stripe: Stripe, email: string) {
+  const customers = await stripe.customers.list({ email, limit: 100 });
+  return customers.data.toSorted((left, right) => right.created - left.created)[0]?.id ?? null;
 }

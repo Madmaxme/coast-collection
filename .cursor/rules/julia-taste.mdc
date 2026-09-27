@@ -13,7 +13,7 @@ Hunny House is the **browsing feel**, not a clone. Brand is Coast Collection (ha
 - **Footer:** thin (copyright, Instagram, TikTok, Shipping). Not a second Account/Cart column.
 - Nav lists are **plain rows** (links/`<button>`). Do not use the shared `Button` chrome in the drawer — it draws boxes.
 - One homepage product **rail** (all products). Shop page is a **grid** (2 / 3 / 4 cols). Collage is **full-bleed**.
-- Marquee must **loop**. Taps ≥ 44px. Search lists matches. Product pages: description, price, sizes on tanks only, quantity, add to cart. Cart drawer lists those lines. Account create / sign-in is local to this browser. Checkout is Stripe hosted Checkout; the server prices lines from the catalog. `STRIPE_SECRET_KEY` stays out of the repo.
+- Marquee must **loop**. Taps ≥ 44px. Search lists matches. Product pages: description, price, sizes on tanks only, quantity, add to cart. Cart drawer lists those lines. Account is `/account`: Clerk proves the email; Stripe holds the shipping address and paid orders. Checkout is Stripe hosted Checkout; the server prices lines from the catalog. `STRIPE_SECRET_KEY` stays out of the repo.
 - Homepage **story** after the collage. Product stills blend into canvas. Bags **$65**, tanks **$70**; no “one of a kind” on cards.
 - After UI work, check **phone width and desktop**. Screenshot-only is not enough.
 

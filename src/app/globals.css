@@ -154,6 +154,102 @@
   background-color: rgb(58 46 38 / 0.4);
 }
 
+.cl-rootBox,
+.cl-cardBox,
+.cl-card,
+.cl-main,
+.cl-header,
+.cl-footer {
+  width: 100%;
+  max-width: none;
+}
+
+.cl-card {
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.cl-cardBox,
+.cl-socialButtonsBlockButton,
+.cl-formFieldInput,
+.cl-formButtonPrimary {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.cl-cardBox,
+.cl-footer,
+.cl-formFieldInput,
+.cl-socialButtonsBlockButton {
+  background: var(--canvas);
+}
+
+.cl-headerTitle,
+.cl-formFieldLabel,
+.cl-footerActionText,
+.cl-footerActionLink,
+.cl-socialButtonsBlockButtonText,
+.cl-dividerText,
+.cl-formFieldInput,
+.cl-formButtonPrimary {
+  color: var(--ink);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.cl-headerTitle {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.cl-headerSubtitle,
+.cl-footerItem,
+.cl-formButtonPrimary svg,
+[data-localization-key="lastAuthenticationStrategy"] {
+  display: none;
+}
+
+.cl-rootBox .cl-footer {
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 1rem 0 0 !important;
+  padding: 0;
+}
+
+.cl-rootBox .cl-footerAction {
+  width: 100%;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.cl-rootBox .cl-formButtonPrimary svg {
+  display: none !important;
+}
+
+.cl-socialButtonsBlockButton,
+.cl-socialButtonsBlockButton > span {
+  justify-content: flex-start;
+}
+
+.cl-formButtonPrimary,
+.cl-socialButtonsBlockButton,
+.cl-formFieldInput {
+  min-height: 2.75rem;
+  border: 1px solid color-mix(in srgb, var(--craft) 40%, transparent);
+}
+
+.cl-formButtonPrimary {
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee {
     animation: none;

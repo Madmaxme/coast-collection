@@ -15,7 +15,7 @@ Same policy as `.cursor/rules/` (Cursor loads those automatically). Other agents
 - Site copy, nav, social URLs, hero, collage, and products live only in `src/content/`. Parse with Zod. Types from `z.infer` in `src/content/schema.ts`.
 - Do not duplicate product names or image paths in components. Import `@/content`.
 - Do not commit `*.mov` or `/raw/`. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
-- Search, product pages, and the cart drawer work against the catalog. Account is local to the browser. Checkout is Stripe hosted Checkout (`STRIPE_SECRET_KEY`, never committed). Prefer Server Components.
+- Search, product pages, and the cart drawer work against the catalog. Account is `/account`: Clerk proves the email, and Stripe holds the shipping address and paid orders. Checkout is Stripe hosted Checkout (`STRIPE_SECRET_KEY`, never committed). Prefer Server Components.
 
 ## Harness
 

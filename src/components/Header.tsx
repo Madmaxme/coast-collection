@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { products, type Site } from "@/content";
 import { setCartQuantity, useCartLines } from "@/lib/cart";
@@ -20,7 +20,7 @@ type HeaderProps = {
   sheetCopy: Site["sheetCopy"];
 };
 
-type Sheet = "account" | "search" | "cart";
+type Sheet = "search" | "cart";
 
 const drawerLinkClassName =
   "flex min-h-11 items-center border-b border-craft/10 text-[15px] text-ink";
@@ -31,43 +31,13 @@ const headerUtilityClassName =
 const fieldClassName =
   "min-h-11 w-full border border-craft/20 bg-canvas px-3 text-[15px] text-ink outline-none";
 
-const ACCOUNT_KEY = "coast-account";
-
-type StoredAccount = { email: string; signedIn: boolean };
-
-// ponytail: one browser, localStorage only. Password is not stored or checked. Upgrade: a real auth provider.
-const accountListeners = new Set<() => void>();
-let accountRaw = typeof window === "undefined" ? "" : (localStorage.getItem(ACCOUNT_KEY) ?? "");
-
-function parseAccount(raw: string): StoredAccount | null {
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw) as StoredAccount;
-    if (typeof parsed.email !== "string" || parsed.email.length === 0) return null;
-    return { email: parsed.email, signedIn: Boolean(parsed.signedIn) };
-  } catch {
-    return null;
-  }
-}
-
-function writeAccount(account: StoredAccount) {
-  accountRaw = JSON.stringify(account);
-  localStorage.setItem(ACCOUNT_KEY, accountRaw);
-  accountListeners.forEach((listener) => listener());
-}
-
-function subscribeAccount(listener: () => void) {
-  accountListeners.add(listener);
-  return () => accountListeners.delete(listener);
-}
-
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 function labelToSheet(label: string): Sheet | null {
   const key = label.toLowerCase();
-  if (key === "account" || key === "search" || key === "cart") return key;
+  if (key === "search" || key === "cart") return key;
   return null;
 }
 
@@ -83,20 +53,14 @@ export function Header({
   const router = useRouter();
   const drawerRef = useRef<HTMLDialogElement>(null);
   const cartRef = useRef<HTMLDialogElement>(null);
-  const accountRef = useRef<HTMLDialogElement>(null);
   const searchRef = useRef<HTMLDialogElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [accountMode, setAccountMode] = useState<"sign-in" | "create">("sign-in");
-  const [accountError, setAccountError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [checkoutError, setCheckoutError] = useState("");
   const [checkoutPending, setCheckoutPending] = useState(false);
   const lines = useCartLines();
-  const account = parseAccount(useSyncExternalStore(subscribeAccount, () => accountRaw, () => ""));
-  const savedEmail = account?.email ?? null;
-  const sessionEmail = account?.signedIn ? account.email : null;
   const cartItem = utilityNav.find((item) => item.label.toLowerCase() === "cart");
   const drawerUtilities = utilityNav.filter((item) => item.label.toLowerCase() !== "cart");
   const searchHits = products.filter((product) => matchesQuery(productHaystack(product), searchQuery));
@@ -227,15 +191,6 @@ export function Header({
     setCartOpen(false);
   }
 
-  function openAccount() {
-    closeDrawerNow();
-    accountRef.current?.showModal();
-  }
-
-  function closeAccount() {
-    accountRef.current?.close();
-  }
-
   function openSearch() {
     closeDrawerNow();
     searchRef.current?.showModal();
@@ -251,7 +206,6 @@ export function Header({
   function openSheet(label: string) {
     const sheet = labelToSheet(label);
     if (sheet === "cart") openCart();
-    if (sheet === "account") openAccount();
     if (sheet === "search") openSearch();
   }
 
@@ -287,17 +241,27 @@ export function Header({
           {wordmark}
         </Link>
         <div className="flex min-h-11 items-center justify-end justify-self-end">
-          {drawerUtilities.map((item) => (
-            <Button
-              key={item.label}
-              variant="ghost"
-              type="button"
-              className={`hidden md:inline-flex ${headerUtilityClassName}`}
-              onClick={() => openSheet(item.label)}
-            >
-              {item.label}
-            </Button>
-          ))}
+          {drawerUtilities.map((item) =>
+            item.label.toLowerCase() === "account" ? (
+              <Link
+                key={item.label}
+                href="/account"
+                className={`hidden items-center md:inline-flex ${headerUtilityClassName}`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <Button
+                key={item.label}
+                variant="ghost"
+                type="button"
+                className={`hidden md:inline-flex ${headerUtilityClassName}`}
+                onClick={() => openSheet(item.label)}
+              >
+                {item.label}
+              </Button>
+            ),
+          )}
           {cartItem ? (
             <Button
               variant="ghost"
@@ -344,16 +308,27 @@ export function Header({
           <Link href="/shop" className={drawerLinkClassName} onClick={closeDrawer}>
             {navLabel}
           </Link>
-          {drawerUtilities.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              className={`${drawerLinkClassName} w-full text-left`}
-              onClick={() => openSheet(item.label)}
-            >
-              {item.label}
-            </button>
-          ))}
+          {drawerUtilities.map((item) =>
+            item.label.toLowerCase() === "account" ? (
+              <Link
+                key={item.label}
+                href="/account"
+                className={drawerLinkClassName}
+                onClick={closeDrawer}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                className={`${drawerLinkClassName} w-full text-left`}
+                onClick={() => openSheet(item.label)}
+              >
+                {item.label}
+              </button>
+            ),
+          )}
           {infoNav.map((item) => (
             <button key={item.label} type="button" className={`${drawerLinkClassName} w-full text-left`}>
               {item.label}
@@ -471,108 +446,6 @@ export function Header({
             </Link>
           </div>
         </div>
-      </dialog>
-
-      <dialog
-        ref={accountRef}
-        className="m-auto w-[min(22rem,92vw)] border border-craft/15 bg-canvas p-0 text-ink"
-        aria-label="Account"
-        onCancel={closeAccount}
-      >
-        <div className="flex items-center justify-between border-b border-craft/15 px-4 py-3">
-          <p className="font-heading text-lg tracking-[0.12em] uppercase">
-            {drawerUtilities.find((item) => item.label.toLowerCase() === "account")?.label}
-          </p>
-          <Button variant="ghost" type="button" className="min-h-11 min-w-11" onClick={closeAccount}>
-            <X className="size-5" />
-            <span className="sr-only">Close</span>
-          </Button>
-        </div>
-        {sessionEmail ? (
-          <div className="flex flex-col gap-4 px-4 py-6">
-            <p className="text-[15px] text-ink">{sessionEmail}</p>
-            <button
-              type="button"
-              className="flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
-              onClick={() => {
-                if (!savedEmail) return;
-                writeAccount({ email: savedEmail, signedIn: false });
-              }}
-            >
-              {sheetCopy.signOut}
-            </button>
-          </div>
-        ) : (
-          <form
-            className="flex flex-col gap-3 px-4 py-6"
-            onSubmit={(event) => {
-              event.preventDefault();
-              const email = String(new FormData(event.currentTarget).get("email") ?? "").trim();
-              if (!email) return;
-              if (accountMode === "create") {
-                writeAccount({ email, signedIn: true });
-                setAccountError("");
-                return;
-              }
-              if (savedEmail && savedEmail.toLowerCase() === email.toLowerCase()) {
-                writeAccount({ email: savedEmail, signedIn: true });
-                setAccountError("");
-                return;
-              }
-              setAccountError(sheetCopy.accountUnknown);
-            }}
-          >
-            <div className="flex gap-2">
-              <button
-                type="button"
-                className={`min-h-11 flex-1 text-[13px] ${accountMode === "sign-in" ? "text-ink" : "text-ink/40"}`}
-                onClick={() => {
-                  setAccountMode("sign-in");
-                  setAccountError("");
-                }}
-              >
-                {sheetCopy.signIn}
-              </button>
-              <button
-                type="button"
-                className={`min-h-11 flex-1 text-[13px] ${accountMode === "create" ? "text-ink" : "text-ink/40"}`}
-                onClick={() => {
-                  setAccountMode("create");
-                  setAccountError("");
-                }}
-              >
-                {sheetCopy.createAccount}
-              </button>
-            </div>
-            <label className="text-[12px] text-ink/70">
-              {sheetCopy.email}
-              <input
-                type="email"
-                name="email"
-                required
-                autoComplete="email"
-                className={`${fieldClassName} mt-1`}
-              />
-            </label>
-            <label className="text-[12px] text-ink/70">
-              {sheetCopy.password}
-              <input
-                type="password"
-                name="password"
-                required
-                autoComplete={accountMode === "sign-in" ? "current-password" : "new-password"}
-                className={`${fieldClassName} mt-1`}
-              />
-            </label>
-            {accountError ? <p className="text-[13px] text-ink/70">{accountError}</p> : null}
-            <button
-              type="submit"
-              className="mt-2 flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
-            >
-              {accountMode === "sign-in" ? sheetCopy.signIn : sheetCopy.createAccount}
-            </button>
-          </form>
-        )}
       </dialog>
 
       <dialog

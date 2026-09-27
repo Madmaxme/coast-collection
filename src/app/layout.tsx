@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist_Mono, Inter } from "next/font/google";
 import type { ReactNode } from "react";
@@ -40,7 +41,32 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-canvas text-ink">{children}</body>
+      <body className="flex min-h-full flex-col bg-canvas text-ink">
+        <ClerkProvider
+          localization={{
+            signIn: {
+              start: {
+                title: site.sheetCopy.signIn,
+                subtitle: "",
+                actionLink: site.sheetCopy.createAccount,
+              },
+            },
+            signUp: {
+              start: {
+                title: site.sheetCopy.createAccount,
+                subtitle: "",
+                actionLink: site.sheetCopy.signIn,
+              },
+            },
+            formButtonPrimary: site.sheetCopy.signIn,
+            formFieldLabel__emailAddress: site.sheetCopy.email,
+            formFieldLabel__password: site.sheetCopy.password,
+            lastAuthenticationStrategy: "",
+          }}
+        >
+          {children}
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

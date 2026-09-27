@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { buildCheckoutItems, type CheckoutProduct } from "./checkout.ts";
+import { buildCheckoutItems, checkoutBuyer, type CheckoutProduct } from "./checkout.ts";
 
 const sizes = ["Small", "Medium", "Large"];
 const catalog: CheckoutProduct[] = [
@@ -59,5 +59,12 @@ assert.deepEqual(
   buildCheckoutItems([{ slug: "blue-hydrangea", size: "", quantity: 11 }], catalog, sizes),
   { error: "invalid" },
 );
+
+assert.deepEqual(checkoutBuyer(null, null), { customer_creation: "always" });
+assert.deepEqual(checkoutBuyer("julia@example.com", null), {
+  customer_creation: "always",
+  customer_email: "julia@example.com",
+});
+assert.deepEqual(checkoutBuyer("julia@example.com", "cus_123"), { customer: "cus_123" });
 
 console.log("checkout ok");

@@ -1,6 +1,7 @@
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { products, site } from "@/content";
-import { buildCheckoutItems, type CheckoutLine } from "@/lib/checkout";
-import { integrationIdentifier, stripeClient } from "@/lib/stripe";
+import { buildCheckoutItems, checkoutBuyer, type CheckoutLine } from "@/lib/checkout";
+import { INTEGRATION_IDENTIFIER, newestCustomerId, stripeClient } from "@/lib/stripe";
 
 function isLine(value: unknown): value is CheckoutLine {
   if (!value || typeof value !== "object") return false;
@@ -42,27 +43,35 @@ export async function POST(request: Request) {
   const stripe = stripeClient();
   if (!stripe) return Response.json({ error: "unavailable" }, { status: 503 });
 
-  const origin = new URL(request.url).origin;
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    line_items: built.items.map((item) => ({
-      quantity: item.quantity,
-      price_data: {
-        currency: "usd",
-        unit_amount: item.unitAmount,
-        product_data: {
-          name: item.name,
-          description: item.description,
-        },
-      },
-    })),
-    shipping_address_collection: { allowed_countries: ["US"] },
-    phone_number_collection: { enabled: true },
-    success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/shop`,
-    integration_identifier: integrationIdentifier(),
-  });
+  const { userId } = await auth();
+  const email = userId ? ((await currentUser())?.primaryEmailAddress?.emailAddress ?? null) : null;
 
-  if (!session.url) return Response.json({ error: "unavailable" }, { status: 502 });
-  return Response.json({ url: session.url });
+  const origin = new URL(request.url).origin;
+  try {
+    const customerId = email ? await newestCustomerId(stripe, email) : null;
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: built.items.map((item) => ({
+        quantity: item.quantity,
+        price_data: {
+          currency: "usd",
+          unit_amount: item.unitAmount,
+          product_data: {
+            name: item.name,
+            description: item.description,
+          },
+        },
+      })),
+      ...checkoutBuyer(email, customerId),
+      shipping_address_collection: { allowed_countries: ["US"] },
+      phone_number_collection: { enabled: true },
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/shop`,
+      integration_identifier: INTEGRATION_IDENTIFIER,
+    });
+    if (!session.url) return Response.json({ error: "unavailable" }, { status: 502 });
+    return Response.json({ url: session.url });
+  } catch {
+    return Response.json({ error: "unavailable" }, { status: 502 });
+  }
 }

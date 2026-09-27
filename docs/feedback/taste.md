@@ -26,8 +26,8 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 14. Homepage: **story** after collage, then the slim footer. Keep scrolling.
 15. Search lists matching products as you type (`bag` → knot bags, `blue bag` → bags with blue in the name). Enter opens a results page of those matches.
 16. A product card opens its page: description, price, quantity, add to cart. Bags have no sizes. Adding opens the cart drawer with that line and a total.
-17. Account is a page, not only a dialog: email, shipping address from an order, past orders, and Shop now when there are no orders. Cart checkout opens Stripe hosted Checkout. The server sets the price. Shipping address is collected for the US. No tax until a registration exists.
+17. Account is `/account`. Clerk proves the email. Stripe keeps the customer, the shipping address, and paid orders. No orders: Shop links to `/shop`. Guest checkout stays. Cart checkout opens Stripe hosted Checkout. The server sets the price. Shipping address is collected for the US. The account page reads it from the paid Checkout session. No tax until a registration exists.
 
 ## Still stubs
 
-Shipping page. The account page and past orders need a real checkout, not the browser-only email. A live charge needs `STRIPE_SECRET_KEY` in Vercel.
+Shipping page. A live charge needs the live Stripe key on Vercel Production after the account is verified. Preview stays on the sandbox key.

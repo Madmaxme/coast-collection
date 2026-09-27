@@ -1,5 +1,11 @@
 export const MAX_CHECKOUT_QUANTITY = 10;
 
+export function checkoutBuyer(email: string | null, customerId: string | null) {
+  if (customerId) return { customer: customerId };
+  if (email) return { customer_creation: "always" as const, customer_email: email };
+  return { customer_creation: "always" as const };
+}
+
 export type CheckoutLine = {
   slug: string;
   size: string;
