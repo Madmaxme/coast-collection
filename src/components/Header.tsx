@@ -1,10 +1,13 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import type { Site } from "@/content";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
+import { products, type Site } from "@/content";
+import { setCartQuantity, useCartLines } from "@/lib/cart";
+import { matchesQuery, productHaystack } from "@/lib/search";
 
 type HeaderProps = {
   wordmark: Site["wordmark"];
@@ -26,6 +29,36 @@ const headerUtilityClassName =
 
 const fieldClassName =
   "min-h-11 w-full border border-craft/20 bg-canvas px-3 text-[15px] text-ink outline-none";
+
+const ACCOUNT_KEY = "coast-account";
+
+type StoredAccount = { email: string; signedIn: boolean };
+
+// ponytail: one browser, localStorage only. Password is not stored or checked. Upgrade: a real auth provider.
+const accountListeners = new Set<() => void>();
+let accountRaw = typeof window === "undefined" ? "" : (localStorage.getItem(ACCOUNT_KEY) ?? "");
+
+function parseAccount(raw: string): StoredAccount | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as StoredAccount;
+    if (typeof parsed.email !== "string" || parsed.email.length === 0) return null;
+    return { email: parsed.email, signedIn: Boolean(parsed.signedIn) };
+  } catch {
+    return null;
+  }
+}
+
+function writeAccount(account: StoredAccount) {
+  accountRaw = JSON.stringify(account);
+  localStorage.setItem(ACCOUNT_KEY, accountRaw);
+  accountListeners.forEach((listener) => listener());
+}
+
+function subscribeAccount(listener: () => void) {
+  accountListeners.add(listener);
+  return () => accountListeners.delete(listener);
+}
 
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -54,8 +87,76 @@ export function Header({
   const [isOpen, setIsOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [accountMode, setAccountMode] = useState<"sign-in" | "create">("sign-in");
+  const [accountError, setAccountError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [checkoutError, setCheckoutError] = useState("");
+  const [checkoutPending, setCheckoutPending] = useState(false);
+  const lines = useCartLines();
+  const account = parseAccount(useSyncExternalStore(subscribeAccount, () => accountRaw, () => ""));
+  const savedEmail = account?.email ?? null;
+  const sessionEmail = account?.signedIn ? account.email : null;
   const cartItem = utilityNav.find((item) => item.label.toLowerCase() === "cart");
   const drawerUtilities = utilityNav.filter((item) => item.label.toLowerCase() !== "cart");
+  const searchHits = products.filter((product) => matchesQuery(productHaystack(product), searchQuery));
+  const cartLines = lines.flatMap((line) => {
+    const product = products.find((item) => item.slug === line.slug);
+    if (!product) return [];
+    return [{ line, product, amount: product.price * line.quantity }];
+  });
+  const cartAmount = cartLines.reduce((sum, item) => sum + item.amount, 0);
+
+  async function startCheckout() {
+    setCheckoutError("");
+    setCheckoutPending(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lines: cartLines.map(({ line }) => ({
+            slug: line.slug,
+            size: line.size,
+            quantity: line.quantity,
+          })),
+        }),
+      });
+      const payload: unknown = await response.json();
+      const url =
+        payload && typeof payload === "object" && "url" in payload && typeof payload.url === "string"
+          ? payload.url
+          : "";
+      if (!response.ok || url.length === 0) {
+        setCheckoutError(sheetCopy.checkoutUnavailable);
+        return;
+      }
+      window.location.assign(url);
+    } catch {
+      setCheckoutError(sheetCopy.checkoutUnavailable);
+    } finally {
+      setCheckoutPending(false);
+    }
+  }
+
+  useEffect(() => {
+    function onOpen() {
+      setIsOpen(false);
+      drawerRef.current?.close();
+      const dialog = cartRef.current;
+      if (!dialog || dialog.open) return;
+      dialog.showModal();
+      if (prefersReducedMotion()) {
+        setCartOpen(true);
+        return;
+      }
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setCartOpen(true);
+        });
+      });
+    }
+    window.addEventListener("coast-cart-open", onOpen);
+    return () => window.removeEventListener("coast-cart-open", onOpen);
+  }, []);
 
   function openDrawer() {
     const dialog = drawerRef.current;
@@ -293,17 +394,76 @@ export function Header({
             <span className="sr-only">Close</span>
           </Button>
         </div>
-        <div className="flex flex-1 flex-col justify-between px-4 py-8">
-          <p className="text-[15px] text-ink/70">{sheetCopy.cartEmpty}</p>
-          <div>
+        <div className="flex flex-1 flex-col justify-between px-4 py-6">
+          {cartLines.length === 0 ? (
+            <p className="text-[15px] text-ink/70">{sheetCopy.cartEmpty}</p>
+          ) : (
+            <ul className="flex flex-col gap-4 overflow-y-auto">
+              {cartLines.map(({ line, product, amount }) => (
+                <li key={`${line.slug}:${line.size}`} className="flex gap-3 border-b border-craft/10 pb-4">
+                  <Image
+                    src={product.imageSrc}
+                    alt=""
+                    width={48}
+                    height={64}
+                    className="h-16 w-auto object-contain mix-blend-multiply"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <Link href={`/shop/${product.slug}`} className="font-heading text-base text-ink">
+                      {product.name}
+                    </Link>
+                    {line.size ? <p className="text-[12px] text-ink/70">{line.size}</p> : null}
+                    <p className="text-[13px] text-ink/70">${amount}</p>
+                    <div className="mt-2 flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="min-h-11 min-w-11 border border-craft/30 text-[15px]"
+                        aria-label={sheetCopy.decreaseQuantity}
+                        onClick={() => setCartQuantity(line.slug, line.size, line.quantity - 1)}
+                      >
+                        −
+                      </button>
+                      <span className="min-w-6 text-center text-[15px]">{line.quantity}</span>
+                      <button
+                        type="button"
+                        className="min-h-11 min-w-11 border border-craft/30 text-[15px]"
+                        aria-label={sheetCopy.increaseQuantity}
+                        onClick={() => setCartQuantity(line.slug, line.size, line.quantity + 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      className="min-h-11 text-[12px] text-ink/70 underline"
+                      onClick={() => setCartQuantity(line.slug, line.size, 0)}
+                    >
+                      {sheetCopy.remove}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="pt-6">
             <p className="mb-6 flex items-center justify-between text-[15px]">
               <span>{sheetCopy.cartTotal}</span>
-              <span>{sheetCopy.emptyTotal}</span>
+              <span>{cartLines.length === 0 ? sheetCopy.emptyTotal : `$${cartAmount}`}</span>
             </p>
+            {cartLines.length > 0 ? (
+              <button
+                type="button"
+                className="mb-3 flex min-h-11 w-full items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase disabled:opacity-40"
+                disabled={checkoutPending}
+                onClick={() => void startCheckout()}
+              >
+                {sheetCopy.checkout}
+              </button>
+            ) : null}
+            {checkoutError ? <p className="mb-3 text-[13px]">{checkoutError}</p> : null}
             <Link
               href="/shop"
               className="flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
-              onClick={closeCart}
             >
               {navLabel}
             </Link>
@@ -326,48 +486,91 @@ export function Header({
             <span className="sr-only">Close</span>
           </Button>
         </div>
-        <form
-          className="flex flex-col gap-3 px-4 py-6"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <div className="flex gap-2">
+        {sessionEmail ? (
+          <div className="flex flex-col gap-4 px-4 py-6">
+            <p className="text-[15px] text-ink">{sessionEmail}</p>
             <button
               type="button"
-              className={`min-h-11 flex-1 text-[13px] ${accountMode === "sign-in" ? "text-ink" : "text-ink/40"}`}
-              onClick={() => setAccountMode("sign-in")}
+              className="flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
+              onClick={() => {
+                if (!savedEmail) return;
+                writeAccount({ email: savedEmail, signedIn: false });
+              }}
             >
-              {sheetCopy.signIn}
-            </button>
-            <button
-              type="button"
-              className={`min-h-11 flex-1 text-[13px] ${accountMode === "create" ? "text-ink" : "text-ink/40"}`}
-              onClick={() => setAccountMode("create")}
-            >
-              {sheetCopy.createAccount}
+              {sheetCopy.signOut}
             </button>
           </div>
-          <label className="text-[12px] text-ink/70">
-            {sheetCopy.email}
-            <input type="email" name="email" autoComplete="email" className={`${fieldClassName} mt-1`} />
-          </label>
-          <label className="text-[12px] text-ink/70">
-            {sheetCopy.password}
-            <input
-              type="password"
-              name="password"
-              autoComplete={accountMode === "sign-in" ? "current-password" : "new-password"}
-              className={`${fieldClassName} mt-1`}
-            />
-          </label>
-          <button
-            type="submit"
-            className="mt-2 flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
+        ) : (
+          <form
+            className="flex flex-col gap-3 px-4 py-6"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const email = String(new FormData(event.currentTarget).get("email") ?? "").trim();
+              if (!email) return;
+              if (accountMode === "create") {
+                writeAccount({ email, signedIn: true });
+                setAccountError("");
+                return;
+              }
+              if (savedEmail && savedEmail.toLowerCase() === email.toLowerCase()) {
+                writeAccount({ email: savedEmail, signedIn: true });
+                setAccountError("");
+                return;
+              }
+              setAccountError(sheetCopy.accountUnknown);
+            }}
           >
-            {accountMode === "sign-in" ? sheetCopy.signIn : sheetCopy.createAccount}
-          </button>
-        </form>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                className={`min-h-11 flex-1 text-[13px] ${accountMode === "sign-in" ? "text-ink" : "text-ink/40"}`}
+                onClick={() => {
+                  setAccountMode("sign-in");
+                  setAccountError("");
+                }}
+              >
+                {sheetCopy.signIn}
+              </button>
+              <button
+                type="button"
+                className={`min-h-11 flex-1 text-[13px] ${accountMode === "create" ? "text-ink" : "text-ink/40"}`}
+                onClick={() => {
+                  setAccountMode("create");
+                  setAccountError("");
+                }}
+              >
+                {sheetCopy.createAccount}
+              </button>
+            </div>
+            <label className="text-[12px] text-ink/70">
+              {sheetCopy.email}
+              <input
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+                className={`${fieldClassName} mt-1`}
+              />
+            </label>
+            <label className="text-[12px] text-ink/70">
+              {sheetCopy.password}
+              <input
+                type="password"
+                name="password"
+                required
+                autoComplete={accountMode === "sign-in" ? "current-password" : "new-password"}
+                className={`${fieldClassName} mt-1`}
+              />
+            </label>
+            {accountError ? <p className="text-[13px] text-ink/70">{accountError}</p> : null}
+            <button
+              type="submit"
+              className="mt-2 flex min-h-11 items-center justify-center border border-craft/40 text-[13px] tracking-wide uppercase"
+            >
+              {accountMode === "sign-in" ? sheetCopy.signIn : sheetCopy.createAccount}
+            </button>
+          </form>
+        )}
       </dialog>
 
       <dialog
@@ -396,9 +599,41 @@ export function Header({
             ref={searchInputRef}
             type="search"
             name="q"
+            value={searchQuery}
             placeholder={sheetCopy.searchPlaceholder}
             className={fieldClassName}
+            onChange={(event) => setSearchQuery(event.target.value)}
           />
+          {searchQuery.trim() ? (
+            searchHits.length === 0 ? (
+              <p className="mt-4 text-[15px] text-ink/70">{sheetCopy.searchEmpty}</p>
+            ) : (
+              <ul className="mt-4 flex max-h-80 flex-col overflow-y-auto">
+                {searchHits.map((product) => (
+                  <li key={product.id} className="border-b border-craft/10">
+                    <Link
+                      href={`/shop/${product.slug}`}
+                      className="flex min-h-11 items-center gap-3 py-2"
+                    >
+                      <Image
+                        src={product.imageSrc}
+                        alt=""
+                        width={40}
+                        height={52}
+                        className="h-14 w-auto object-contain mix-blend-multiply"
+                      />
+                      <span>
+                        <span className="block font-heading text-base text-ink">{product.name}</span>
+                        {product.priceLabel ? (
+                          <span className="text-[12px] text-ink/70">{product.priceLabel}</span>
+                        ) : null}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )
+          ) : null}
         </form>
       </dialog>
     </header>

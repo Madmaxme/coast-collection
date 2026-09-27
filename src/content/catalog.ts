@@ -156,8 +156,12 @@ const listed = [
 ] as const;
 
 export const products: Product[] = ProductSchema.array().min(1).parse(
-  listed.map((product) => ({
-    ...product,
-    priceLabel: product.category === "knot-bag" ? "$65" : "$70",
-  })),
+  listed.map((product) => {
+    const price = product.category === "knot-bag" ? 65 : 70;
+    return {
+      ...product,
+      price,
+      priceLabel: `$${price}`,
+    };
+  }),
 );

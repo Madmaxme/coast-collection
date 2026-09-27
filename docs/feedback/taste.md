@@ -15,7 +15,7 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 3. `/shop` is a vertical catalog (grid), not a hash on the homepage.
 4. One homepage product row mixing bags and tanks.
 5. Full-bleed collage.
-6. Marquee must loop with **no blank gap** (repeat the line until the track fills the viewport).
+6. Marquee must loop with **no blank gap**, and move slowly (about a 96s loop).
 7. Mobile **drawer** for Menu; **Cart always visible**.
 8. Desktop header: **Shop only** — no Knot bags / Appliqué tanks links. Shop type matches Account / Search / Cart.
 9. Hero title uses the **same heading serif** as the wordmark, larger — not a script overlay.
@@ -24,8 +24,10 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 12. Product photos **blend** into canvas (no gray/white squares). Cream stills were the reference.
 13. Cards: bags **$65**, tanks **$70**. No “one of a kind” on the card.
 14. Homepage: **story** after collage, then the slim footer. Keep scrolling.
-15. Account / Search / Cart open **UI shells** (sign in, search field, cart drawer with empty + Shop). Still no Stripe.
+15. Search lists matching products as you type (`bag` → knot bags, `blue bag` → bags with blue in the name).
+16. A product card opens its page: description, price, **sizes only on tanks**, quantity, add to cart. Adding opens the cart drawer with that line and a total.
+17. Account create / sign-in completes in this browser (local only). Cart checkout opens Stripe hosted Checkout. The server sets the price. Shipping address is collected for the US. No tax until a registration exists.
 
 ## Still stubs
 
-Shipping, real auth, search hits, cart line items — no Stripe until checkout exists.
+Shipping page, accounts that work on another device. A live charge needs `STRIPE_SECRET_KEY` in the environment (restricted key, not in the repo).

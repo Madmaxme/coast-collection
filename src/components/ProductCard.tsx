@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Product } from "@/content";
 
 type ProductCardProps = {
@@ -8,7 +9,7 @@ type ProductCardProps = {
 
 export function ProductCard({ product, sizes }: ProductCardProps) {
   return (
-    <>
+    <Link href={`/shop/${product.slug}`} className="block">
       <div className="relative aspect-[3/4]">
         <Image
           src={product.imageSrc}
@@ -24,6 +25,6 @@ export function ProductCard({ product, sizes }: ProductCardProps) {
           {product.priceLabel}
         </p>
       ) : null}
-    </>
+    </Link>
   );
 }
