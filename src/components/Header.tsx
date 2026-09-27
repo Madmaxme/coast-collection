@@ -3,6 +3,7 @@
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import { products, type Site } from "@/content";
@@ -79,6 +80,7 @@ export function Header({
   infoNav,
   sheetCopy,
 }: HeaderProps) {
+  const router = useRouter();
   const drawerRef = useRef<HTMLDialogElement>(null);
   const cartRef = useRef<HTMLDialogElement>(null);
   const accountRef = useRef<HTMLDialogElement>(null);
@@ -593,6 +595,10 @@ export function Header({
           className="px-4 py-6"
           onSubmit={(event) => {
             event.preventDefault();
+            const query = searchQuery.trim();
+            if (!query) return;
+            searchRef.current?.close();
+            router.push(`/search?q=${encodeURIComponent(query)}`);
           }}
         >
           <input

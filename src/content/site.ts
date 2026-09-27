@@ -17,7 +17,7 @@ export const site = SiteSchema.parse({
     follow: "Follow",
   },
   footerBlurb:
-    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe and beaded appliqué tanks — one motif, one piece.",
+    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe — one motif, one piece.",
   sheetCopy: {
     signIn: "Sign in",
     createAccount: "Create an account",
