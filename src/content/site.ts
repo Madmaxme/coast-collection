@@ -17,7 +17,7 @@ export const site = SiteSchema.parse({
     follow: "Follow",
   },
   footerBlurb:
-    "Coast Collection is a handmade studio of Japanese knot bags with suede fringe — one motif, one piece.",
+    "I’m Julia, the founder of Coast Collection! I started this small business in the summer of 2025 with a love for creating meaningful pieces by hand. Every item in the Coast Collection is handmade by me, from start to finish, with lots of care and attention to detail. What started as a small idea has grown into something I’m so proud to share with you. I also believe in giving back to the places that inspire me, which is why a portion of proceeds from Coast Collection is donated to support environmental causes. Thank you for supporting my small business and being part of the journey! ♡",
   sheetCopy: {
     signIn: "Sign in",
     createAccount: "Create an account",
@@ -54,6 +54,9 @@ export const site = SiteSchema.parse({
     { id: "knot-bag", heading: "Knot bags" },
     { id: "applique-tank", heading: "Appliqué tanks" },
   ],
+  storyImageSrc: "/hero/julia.jpg",
+  storyImageAlt:
+    "Julia at a Coast Collection market table with handmade bags and appliqué pieces",
   heroImageSrc: "/hero/homepage.jpg",
   heroImageAlt:
     "Coast Collection look: white tank with a palm-tree patch, shell belt, and cream trousers in front of a boutique window",

@@ -14,5 +14,13 @@ assert.equal(matchesQuery(leopard, "blue bag"), false);
 assert.equal(matchesQuery(tank, "bag"), false);
 assert.equal(matchesQuery(tank, "tank"), true);
 assert.equal(matchesQuery(blue, "   "), false);
+assert.equal(matchesQuery(dusty, "flower"), true);
+assert.equal(matchesQuery(blue, "flower"), true);
+assert.equal(
+  matchesQuery(productHaystack({ name: "Rose toile", category: "knot-bag" }), "flower"),
+  true,
+);
+assert.equal(matchesQuery(leopard, "flower"), false);
+assert.equal(matchesQuery(dusty, "floral"), true);
 
 console.log("search ok");

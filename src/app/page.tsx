@@ -31,7 +31,12 @@ export default function Home() {
         <Marquee items={site.marqueeItems} />
         <ProductRail products={products} />
         <Collage images={collageImages} />
-        <Story heading={site.wordmark} body={site.footerBlurb} />
+        <Story
+          heading={site.wordmark}
+          body={site.footerBlurb}
+          imageSrc={site.storyImageSrc}
+          imageAlt={site.storyImageAlt}
+        />
       </main>
       <Footer name={site.name} social={site.social} infoNav={site.infoNav} />
     </div>

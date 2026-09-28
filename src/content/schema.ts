@@ -73,6 +73,8 @@ export const SiteSchema = z.object({
   productCategories: z.array(ProductCategorySchema).min(1),
   heroImageSrc: z.string().startsWith("/hero/"),
   heroImageAlt: z.string().min(1),
+  storyImageSrc: z.string().startsWith("/hero/"),
+  storyImageAlt: z.string().min(1),
 });
 
 export const ProductSchema = z.object({
