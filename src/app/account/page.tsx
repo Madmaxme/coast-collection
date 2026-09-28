@@ -30,8 +30,18 @@ export default async function AccountPage() {
         infoNav={site.infoNav}
         sheetCopy={site.sheetCopy}
       />
-      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 px-4 py-16">
-        <h1 className="font-heading text-3xl tracking-[0.08em] uppercase">{accountLabel}</h1>
+      <main
+        className={
+          email
+            ? "mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 px-4 py-16"
+            : "account-login mx-auto flex w-full max-w-[26rem] flex-1 flex-col px-4 py-20"
+        }
+      >
+        <h1
+          className={`font-heading text-3xl tracking-[0.08em] uppercase ${email ? "" : "text-center"}`}
+        >
+          {email ? accountLabel : site.sheetCopy.signIn}
+        </h1>
         {email ? (
           <>
             <p className="text-[15px]">{email}</p>
@@ -69,7 +79,9 @@ export default async function AccountPage() {
             </SignOutButton>
           </>
         ) : (
-          <SignIn routing="hash" fallbackRedirectUrl="/account" />
+          <div className="mt-10 w-full">
+            <SignIn routing="hash" fallbackRedirectUrl="/account" />
+          </div>
         )}
       </main>
       <Footer name={site.name} social={site.social} infoNav={site.infoNav} />

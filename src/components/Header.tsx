@@ -246,7 +246,7 @@ export function Header({
               <Link
                 key={item.label}
                 href="/account"
-                className={`hidden items-center md:inline-flex ${headerUtilityClassName}`}
+                className={`hidden items-center outline-none focus-visible:underline md:inline-flex ${headerUtilityClassName}`}
               >
                 {item.label}
               </Link>

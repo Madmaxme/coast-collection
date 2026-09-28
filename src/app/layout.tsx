@@ -58,7 +58,6 @@ export default function RootLayout({
                 actionLink: site.sheetCopy.signIn,
               },
             },
-            formButtonPrimary: site.sheetCopy.signIn,
             formFieldLabel__emailAddress: site.sheetCopy.email,
             formFieldLabel__password: site.sheetCopy.password,
             lastAuthenticationStrategy: "",
