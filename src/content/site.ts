@@ -10,7 +10,7 @@ export const site = SiteSchema.parse({
     { label: "TikTok", href: "https://www.tiktok.com/@julesgruber12" },
   ],
   utilityNav: [{ label: "Account" }, { label: "Search" }, { label: "Cart" }],
-  infoNav: [{ label: "Shipping" }],
+  infoNav: [{ label: "Shipping", href: "/shipping" }],
   footerHeadings: {
     shop: "Shop",
     help: "Help",
@@ -18,6 +18,13 @@ export const site = SiteSchema.parse({
   },
   footerBlurb:
     "I’m Julia, the founder of Coast Collection! I started this small business in the summer of 2025 with a love for creating meaningful pieces by hand. Every item in the Coast Collection is handmade by me, from start to finish, with lots of care and attention to detail. What started as a small idea has grown into something I’m so proud to share with you. I also believe in giving back to the places that inspire me, which is why a portion of proceeds from Coast Collection is donated to support environmental causes. Thank you for supporting my small business and being part of the journey! ♡",
+  shippingPage: {
+    heading: "Shipping",
+    paragraphs: [
+      "Free shipping.",
+      "Everything is final sale. No returns until the shop is bigger.",
+    ],
+  },
   sheetCopy: {
     signIn: "Sign in",
     createAccount: "Create an account",

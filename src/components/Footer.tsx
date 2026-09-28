@@ -1,5 +1,5 @@
+import Link from "next/link";
 import type { Site } from "@/content";
-import { Button } from "@/components/ui/button";
 
 type FooterProps = {
   name: Site["name"];
@@ -28,16 +28,17 @@ export function Footer({ name, social, infoNav }: FooterProps) {
               {link.label}
             </a>
           ))}
-          {infoNav.map((item) => (
-            <Button
-              key={item.label}
-              variant="ghost"
-              type="button"
-              className="inline-flex h-auto min-h-11 px-0 text-[13px] text-ink/70 hover:bg-transparent hover:text-jewel"
-            >
-              {item.label}
-            </Button>
-          ))}
+          {infoNav.map((item) =>
+            item.href ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="inline-flex min-h-11 items-center text-[13px] text-ink/70 hover:text-jewel"
+              >
+                {item.label}
+              </Link>
+            ) : null,
+          )}
         </div>
       </div>
     </footer>

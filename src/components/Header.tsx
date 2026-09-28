@@ -329,11 +329,18 @@ export function Header({
               </button>
             ),
           )}
-          {infoNav.map((item) => (
-            <button key={item.label} type="button" className={`${drawerLinkClassName} w-full text-left`}>
-              {item.label}
-            </button>
-          ))}
+          {infoNav.map((item) =>
+            item.href ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={drawerLinkClassName}
+                onClick={closeDrawer}
+              >
+                {item.label}
+              </Link>
+            ) : null,
+          )}
           {social.map((link) => (
             <a
               key={link.label}

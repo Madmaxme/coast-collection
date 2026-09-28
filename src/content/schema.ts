@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const NavItemSchema = z.object({
   label: z.string().min(1),
+  href: z.string().min(1).optional(),
 });
 
 export const SocialLinkSchema = z.object({
@@ -38,6 +39,10 @@ export const SiteSchema = z.object({
     follow: z.string().min(1),
   }),
   footerBlurb: z.string().min(1),
+  shippingPage: z.object({
+    heading: z.string().min(1),
+    paragraphs: z.array(z.string().min(1)).min(1),
+  }),
   sheetCopy: z.object({
     signIn: z.string().min(1),
     createAccount: z.string().min(1),
@@ -81,6 +86,7 @@ export const ProductSchema = z.object({
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
+  caption: z.string().min(1),
   category: ProductCategoryIdSchema,
   imageSrc: merchImageSrc,
   hoverImageSrc: merchImageSrc.optional(),
