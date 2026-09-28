@@ -20,6 +20,36 @@ function formatShipping(
   return lines.length > 0 ? lines.join("\n") : null;
 }
 
+export type Receipt = {
+  email: string | null;
+  shipping: string | null;
+  lines: { name: string; quantity: number; amount: number }[];
+  total: number;
+};
+
+export async function receiptForSession(sessionId: string): Promise<Receipt | null> {
+  const stripe = stripeClient();
+  if (!stripe) return null;
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: ["line_items"] });
+    if (session.payment_status !== "paid") return null;
+    return {
+      email: session.customer_details?.email ?? null,
+      shipping: formatShipping(session.collected_information?.shipping_details),
+      lines: (session.line_items?.data ?? [])
+        .map((item) => ({
+          name: item.description ?? "",
+          quantity: item.quantity ?? 1,
+          amount: item.amount_total ?? 0,
+        }))
+        .filter((line) => line.name.length > 0),
+      total: session.amount_total ?? 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
 // ponytail: first 100 customers and 100 complete sessions each. Upgrade: auto-paging.
 export async function paidOrdersForEmail(email: string) {
   const stripe = stripeClient();

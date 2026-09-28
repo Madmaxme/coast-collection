@@ -39,7 +39,7 @@ export const site = SiteSchema.parse({
     checkout: "Checkout",
     checkoutUnavailable: "Checkout isn't available yet",
     orderReceived: "Thank you",
-    orderReceivedBody: "This order is paid.",
+    orderReceivedBody: "A receipt is on its way.",
     paymentUnconfirmed: "Payment not confirmed",
     paymentUnconfirmedBody: "This page doesn't show a paid order.",
   },
