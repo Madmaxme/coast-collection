@@ -77,6 +77,7 @@ const listed = [
     id: "cowhide",
     slug: "cowhide",
     name: "Cowhide",
+    price: 75,
     searchTerms: ["cow", "cow print", "black", "brown", "suede", "fringe"],
     category: "knot-bag",
     imageSrc: "/bags/cowhide.jpeg",
@@ -95,6 +96,7 @@ const listed = [
     id: "white-cow",
     slug: "white-cow",
     name: "White cow",
+    price: 75,
     searchTerms: ["cow", "cow print", "cowhide", "brown", "black", "suede", "fringe"],
     category: "knot-bag",
     imageSrc: "/bags/white-cow.jpeg",
@@ -113,6 +115,7 @@ const listed = [
     id: "snake",
     slug: "snake",
     name: "Snake",
+    price: 75,
     searchTerms: ["snakeskin", "python", "brown", "black", "cream", "suede", "fringe"],
     category: "knot-bag",
     imageSrc: "/bags/snake.jpeg",
@@ -122,7 +125,7 @@ const listed = [
 
 export const products: Product[] = ProductSchema.array().min(1).parse(
   listed.map((product) => {
-    const price = product.category === "knot-bag" ? 65 : 70;
+    const price = "price" in product ? product.price : product.category === "knot-bag" ? 65 : 70;
     return {
       ...product,
       price,
