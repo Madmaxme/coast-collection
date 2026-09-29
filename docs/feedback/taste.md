@@ -30,4 +30,4 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 
 ## Still stubs
 
-A live charge needs the live Stripe key on Vercel Production after the account is verified. Preview stays on the sandbox key. Shipping opens `/shipping`: free shipping, final sale, no returns until the shop is bigger.
+A live charge needs the live Stripe key on Vercel Production after the account is verified. Preview stays on the sandbox key. Shipping opens `/shipping`: free shipping in the US, all sales final, and a photo on Instagram within 3 days if a bag arrives damaged or is the wrong one. No ship-by date on the page.

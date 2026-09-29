@@ -21,8 +21,9 @@ export const site = SiteSchema.parse({
   shippingPage: {
     heading: "Shipping",
     paragraphs: [
-      "Free shipping.",
-      "Everything is final sale. No returns until the shop is bigger.",
+      "Free shipping on every order, inside the United States.",
+      "All sales are final. Returns and exchanges are not accepted.",
+      "If a bag arrives damaged, or it is not the one you ordered, message Coast Collection on Instagram within 3 days of delivery and include a photo. It will be replaced or refunded.",
     ],
   },
   sheetCopy: {
