@@ -24,7 +24,7 @@ Update this file when Julia repeats a decision across videos. Per-drop notes go 
 12. Product photos **blend** into canvas (no gray/white squares). Cream stills were the reference.
 13. Cards: bags **$65**. No “one of a kind” on the card.
 14. Homepage: **story** after collage, then the slim footer. Keep scrolling. The story is Julia’s own founder note (handmade, summer 2025, a portion of proceeds to environmental causes). The heading is centered over the paragraph, the paragraph is centered, and her market portrait sits beside that text, large enough that the row has no wide blank gap.
-15. Search lists matching products as you type (`bag` → knot bags, `blue bag` → bags with blue in the name, `pink` → bags whose caption says pink). Each product has a caption, written from its photo, that search matches and the card does not show. Enter opens a results page of those matches.
+15. Search lists matching products as you type. Each product has shopper phrases (the words a buyer would type, including another word for the same thing). A color that is only a detail in the print is not a phrase. The card does not show the phrases. Enter opens a results page of those matches.
 16. A product card opens its page: description, price, quantity, add to cart. Bags have no sizes. Adding opens the cart drawer with that line and a total.
 17. Account is `/account`. Clerk proves the email. Stripe keeps the customer, the shipping address, and paid orders. No orders: Shop links to `/shop`. Guest checkout stays. Cart checkout opens Stripe hosted Checkout. The server sets the price. Shipping address is collected for the US. The account page reads it from the paid Checkout session. No tax until a registration exists.
 

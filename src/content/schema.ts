@@ -86,7 +86,7 @@ export const ProductSchema = z.object({
   id: z.string().min(1),
   slug: z.string().min(1),
   name: z.string().min(1),
-  caption: z.string().min(1),
+  searchTerms: z.array(z.string().min(1)).min(1),
   category: ProductCategoryIdSchema,
   imageSrc: merchImageSrc,
   hoverImageSrc: merchImageSrc.optional(),

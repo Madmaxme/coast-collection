@@ -15,7 +15,7 @@ Same policy as `.cursor/rules/` (Cursor loads those automatically). Other agents
 - Site copy, nav, social URLs, hero, collage, and products live only in `src/content/`. Parse with Zod. Types from `z.infer` in `src/content/schema.ts`.
 - Do not duplicate product names or image paths in components. Import `@/content`.
 - Do not commit `*.mov` or `/raw/`. Runtime images: `public/bags/`, `public/apparel/`, `public/collage/`, `public/hero/`.
-- Search matches each product’s name and caption. A new product needs a caption written from its photo in the same catalog entry; the card does not show it. Product pages and the cart drawer work against the catalog. Account is `/account`: Clerk proves the email, and Stripe holds the shipping address and paid orders. Checkout is Stripe hosted Checkout (`STRIPE_SECRET_KEY`, never committed). Prefer Server Components.
+- Search matches each product’s name and shopper phrases. Phrases are words a buyer would type, including another word for the same thing. A color that is only a detail in the print stays off the list. She approves the list. The card does not show it. Product pages and the cart drawer work against the catalog. Account is `/account`: Clerk proves the email, and Stripe holds the shipping address and paid orders. Checkout is Stripe hosted Checkout (`STRIPE_SECRET_KEY`, never committed). Prefer Server Components.
 
 ## Harness
 
